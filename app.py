@@ -6,6 +6,8 @@ from PIL import Image
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
+import io
+
 app = Flask(__name__, static_url_path="")
 
 UPLOAD_FOLDER = './static/images/'
@@ -118,8 +120,10 @@ def rgbvalue(li, df):
         rgbvalue += "  " * 3 + df.loc[i]
         rgbv.append(rgbvalue)
     return rgbv
+# buffer2 = io.StringIO()
+# buffer3 = io.StringIO()
 
-
+# buffer = io.StringIO()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -142,7 +146,7 @@ def index():
             #     return render_template('index.html', img_name=img_name)
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
-            ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER']+ "original.jpg"))
+            ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER'],"original.jpg"))
             ori_ar=np.asarray(ori)[:,:,:3]
             print(ori_ar.shape)
             img_name="ok"
@@ -150,7 +154,12 @@ def index():
             data_img.append(N_cols),data_img.append(x),data_img.append(y),data_img.append(z)
             img_df=color_grouping(img_df,N_cols)
             col_df=coltable(img_df,N_cols)
-            img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2']+"img.csv"),index=False)
+
+
+            img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"),index=False)
+            # img_df.to_csv(buffer,index=False)
+
+
             hex_ori_df=rgbdf2hexdf(col_df).rename(columns={0:"color code"})
             ori_data[0]= hex_ori_df.columns 
             ori_data[1] = hex_ori_df.values.tolist() 
@@ -158,21 +167,34 @@ def index():
             edit_data[1]=ori_data[1]
             img_name = "ok"
             data_df=pd.DataFrame(data_img)
-            data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"data.csv"),index=False)
-            hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"original.csv"),index=False)
+
+            
+
+            # data_df.to_csv(buffer2,index=False)
+            # hex_ori_df.to_csv(buffer3,index=False)
+            data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] ,"data.csv"),index=False)
+            hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] ,"original.csv"),index=False)
     if request.method == 'GET':
         s=str(request.args.getlist('color'))
-        if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER2'] +"data.csv")):
+        if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER2'] ,"data.csv")):
+            # if os.path.isfile(buffer2):
             img_name = "ok"
             s=s[1:-1]
             s=s.split(', ')
             for i in range(len(s)):
                 s[i]=s[i][1:-1]
             col_li=s
-            data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2']+"data.csv"))
+            data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"data.csv"))
+            # data_df=buffer2.getvalue()
+
             hex_edit_df=pd.DataFrame(col_li).rename(columns={0:"color"})
-            hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"original.csv"))
-            img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2']+"img.csv"))
+
+            hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'] ,"original.csv"))
+            # hex_ori_df=buffer3.getvalue()
+
+            img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"))
+            # img_df=buffer.getvalue()
+
             edit_df=img_df.copy()
             for i in range(len(col_li)):
                 r,g,b=hex2rgb(col_li[i])
@@ -192,7 +214,7 @@ def index():
             print(edit_ar.shape)
             edit_img = Image.fromarray(np.uint8(edit_ar))
             isedit=True
-            edit_img.save(os.path.join(app.config['UPLOAD_FOLDER']+"edit.jpg"))
+            edit_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"edit.jpg"))
     return render_template('index.html', img_name=img_name,
         isedit=isedit, header_ori=ori_data[0], record_ori=ori_data[1],
         N=N_cols,header_edit=edit_data[0], record_edit=edit_data[1]
