@@ -155,8 +155,8 @@ def index():
             img_df=color_grouping(img_df,N_cols)
             col_df=coltable(img_df,N_cols)
 
-            decopri(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"))
-            img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"),index=False)
+            decopri(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
+            img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"),index=False)
             # img_df.to_csv(buffer,index=False)
 
 
@@ -172,11 +172,11 @@ def index():
 
             # data_df.to_csv(buffer2,index=False)
             # hex_ori_df.to_csv(buffer3,index=False)
-            data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] ,"data.csv"),index=False)
-            hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] ,"original.csv"),index=False)
+            data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"data.csv"),index=False)
+            hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"),index=False)
     if request.method == 'GET':
         s=str(request.args.getlist('color'))
-        if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER2'] ,"data.csv")):
+        if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'] ,"data.csv")):
             # if os.path.isfile(buffer2):
             img_name = "ok"
             s=s[1:-1]
@@ -184,15 +184,15 @@ def index():
             for i in range(len(s)):
                 s[i]=s[i][1:-1]
             col_li=s
-            data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"data.csv"))
+            data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"data.csv"))
             # data_df=buffer2.getvalue()
 
             hex_edit_df=pd.DataFrame(col_li).rename(columns={0:"color"})
 
-            hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'] ,"original.csv"))
+            hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"))
             # hex_ori_df=buffer3.getvalue()
 
-            img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"))
+            img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
             # img_df=buffer.getvalue()
 
             edit_df=img_df.copy()
