@@ -220,7 +220,7 @@ def index():
             edit_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"edit.jpg"))
     return render_template('index.html', img_name=img_name,
         isedit=isedit, header_ori=ori_data[0], record_ori=ori_data[1],
-        N=N_cols,header_edit=edit_data[0], record_edit=edit_data[1]
+        N=N_cols,header_edit=edit_data[0], record_edit=edit_data[1],error_case=error_flag
     )
 
 
