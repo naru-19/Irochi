@@ -25,6 +25,24 @@
     </form>
 </div>
 
+{% if error_case %}
+<div class="error-area">
+    <div class="message">
+        操作に誤りがあります。以下の項目を確認してください。
+    </div>
+    <div class="item">
+        ・画像は正しく選択されているか
+    </div>
+    <div class="item">
+        ・構成色数が0より大きい整数であるか
+    </div>
+    <div class="item">
+        ・color codeの入力はhexになっているか
+    </div>
+</div>
+{% endif %}
+
+
 {% if img_name %}
 <div>
     <div class="main">
@@ -89,9 +107,9 @@
                 <div class="edit-table">
                     <form action="/" method="get" enctype="multipart/form-data">
                         {% for i in range(N): %}
-                        <input id="code-{{i}}" type="text" name="color" value="{{record_edit[i][0]}}" onkeyup="changeHandler({{i}})">
+                        <input id="code-{{i}}" maxlength="7" required type="text" name="color" value="{{record_edit[i][0]}}" onkeyup="changeHandler({{i}})">
                         {% endfor %}
-                        <button type="submit" class="btn sub2edit" >色違いにする</button>
+                        <button type="submit" id="editbtn" class="btn sub2edit" >色違いにする</button>
                     </form>
                     <div class="colors">
                         {% for i in range(N): %}
@@ -132,7 +150,7 @@
         step5. 完成したものをダウンロード
     </div>
     <div class="how2use__step">
-        お問い合わせは<a href="https://hurocha.herokuapp.com/contact" target="_blank">こちら</a>から
+        不具合の報告,ご要望は<a href="https://hurocha.herokuapp.com/contact" target="_blank">こちら</a>から
     </div>
     
 </div>
@@ -142,10 +160,17 @@
     function changeHandler(i) {
         var code= document.getElementById("code-"+i);
         var code_color = document.getElementById("area-" + i);
+        var edit_btn= document.getElementById("editbtn");
+        var chk=["0","1","2","3","4","5","6","7","8","9","0","a","b","c", "d", "e", "f"]
         s=code.value;
         if (s.length==7){
             code_color.style.backgroundColor=String(s);
-            console.log(code_color.style);
+            code.style.border = "1px solid rgba(0,0,0,0)";
+            edit_btn.disabled=false;
+        }
+        else{
+            code.style.border = "2px solid red";
+            edit_btn.disabled=true;
         }
 
     }

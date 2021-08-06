@@ -128,6 +128,7 @@ def rgbvalue(li, df):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     img_name = ""
+    error_flag=""
     ori_data=["",""]
     edit_data=["",""]
     N_cols=""
@@ -139,11 +140,13 @@ def index():
         N_cols = request.form['name']
         filename = secure_filename(img_file.filename)
         if len(filename)==0 or N_cols=="":
-            return render_template('index.html', img_name=img_name)
+            error_flag="True"
+            return render_template('index.html', img_name=img_name,error_case=error_flag)
         else:
             N_cols=int(N_cols)
-            # if N_cols<0:
-            #     return render_template('index.html', img_name=img_name)
+            if N_cols<0:
+                error_flag="True"
+                return render_template('index.html', img_name=img_name,error_case=error_flag)
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
             ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER'],"original.jpg"))
