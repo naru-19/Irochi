@@ -10,7 +10,9 @@ app = Flask(__name__)
 def index():
     img_name = ""
     if request.method == 'POST':
-        print("post")
+        stream = request.files['image'].stream
+        N_cols = request.form['name']
+        print("img uploaded")
     if request.method == 'GET':
         print("get")
     return render_template('index.html', img_name=img_name)
