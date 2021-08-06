@@ -4,6 +4,8 @@ from werkzeug.utils import secure_filename
 import os
 from PIL import Image
 import numpy as np
+import pandas as pd
+from sklearn.cluster import KMeans
 app = Flask(__name__, static_url_path="")
 
 UPLOAD_FOLDER = './static/images/'
@@ -17,6 +19,105 @@ CSV_DIR = "/static/csv/"
 BASE_DIR = os.path.dirname(__file__)
 IMG_PATH = BASE_DIR + IMG_DIR
 CSV_PATH = BASE_DIR + CSV_DIR
+
+
+cols=["r","g","b"]
+def decopri(txt):
+    print("-" * 80)
+    if len(str(txt)) < 80:
+        print(" " * int((80 - len(str(txt))) / 2) + str(txt) + " " * int((80 - len(str(txt))) / 2))
+    else:
+        print(str(txt))
+    print("-" * 80)
+def rgb2hex(rgb):
+    cop = rgb.copy()
+    li = ["a", "b", "c", "d", "e", "f"]
+    hex = "#"
+    for i in range(3):
+        if cop[i] / 16 >= 10:
+            hex += li[int(cop[i] / 16) - 10]
+            cop[i] %= 16
+        else:
+            hex += str(int(cop[i] / 16))
+            cop[i] %= 16
+        if cop[i] >= 10:
+            hex += li[cop[i] - 10]
+        else:
+            hex += str(cop[i])
+    return hex
+
+def hex2rgb(h):
+    li = ["a", "b", "c", "d", "e", "f"]
+    h=h[1:]
+    c=[0,0,0]
+    for i in range(6):
+        flag=0
+        for j in range(6):
+            if h[i]==li[j]:
+                c[int(i/2)]+=(10+j)*(16**((i+1)%2))
+                flag=1
+        if flag==0:
+            c[int(i/2)]+=int(h[i])*(16**((i+1)%2))
+    return c[0],c[1],c[2]
+
+
+
+   
+def img2df(input_img):
+    im_ar = input_img
+    x, y, z = im_ar.shape[0], im_ar.shape[1], im_ar.shape[2]
+    df = (pd.DataFrame(im_ar.reshape([x * y, z]))).rename(columns={0: "r", 1: "g", 2: "b"})
+    decopri("img２df completed successfully")
+    return df, x, y, z
+
+
+def color_grouping(df, N):
+    pred = KMeans(n_clusters=N).fit_predict(np.array(df))
+    df["group"] = pred
+    decopri("color_grouping completed successfully")
+    return df
+
+
+def coltable(df, N):
+    col_df = []
+    for i in range(N):
+        data_len = len(df[df["group"] == i])
+        rgb = []
+        for j in range(3):
+            vc = df[df["group"] == i][cols[j]].value_counts()
+            if np.array(vc.head(1))[0] / data_len >= 0.5:
+                rgb.append(vc.keys()[0])
+            else:
+                rgb.append(int(df[df["group"] == i][cols[j]].mean()))
+        #         col_df.append(rgb2hex(rgb))
+        col_df.append(rgb)
+    decopri("coltable completed successfully")
+    col_df = pd.DataFrame(col_df)
+    return col_df
+
+
+def rgbdf2hexdf(rgb_df):
+    hexli = []
+    for i in range(len(rgb_df)):
+        hexli.append(rgb2hex(rgb_df.loc[i]))
+    decopri("rgb2hex completed successfully")
+    return pd.DataFrame(hexli)
+
+
+def rgbvalue(li, df):
+    rgbv = []
+    for i in range(len(li)):
+        rgbvalue = "("
+        for j in range(3):
+            rgbvalue += str(li[i][j])
+            if j != 2:
+                rgbvalue += ","
+        rgbvalue += ")"
+        rgbvalue += "  " * 3 + df.loc[i]
+        rgbv.append(rgbvalue)
+    return rgbv
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -42,9 +143,20 @@ def index():
             ori_ar=np.asarray(ori)
             print(ori_ar.shape)
             img_name="ok"
-
-            print("img uploaded")
-
+            img_df,x,y,z=img2df(ori_ar)
+            data_img.append(N_cols),data_img.append(x),data_img.append(y),data_img.append(z)
+            img_df=color_grouping(img_df,N_cols)
+            col_df=coltable(img_df,N_cols)
+            img_df.to_csv(os.path.join(CSV_PATH +"img.csv"),index=False)
+            hex_ori_df=rgbdf2hexdf(col_df).rename(columns={0:"color code"})
+            ori_data[0]= hex_ori_df.columns 
+            ori_data[1] = hex_ori_df.values.tolist() 
+            edit_data[0]=ori_data[0]
+            edit_data[1]=ori_data[1]
+            img_name = "ok"
+            data_df=pd.DataFrame(data_img)
+            data_df.to_csv(os.path.join(CSV_PATH +"data.csv"),index=False)
+            hex_ori_df.to_csv(os.path.join(CSV_PATH +"original.csv"),index=False)
 
 
     if request.method == 'GET':
