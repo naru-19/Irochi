@@ -1,11 +1,21 @@
 # -*- coding: utf-8 -*-
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 
 app = Flask(__name__)
 
-@app.route('/')
+
+
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return 'Hello Heroku_Flask'
+    img_name = ""
+    if request.method == 'POST':
+        print("post")
+    if request.method == 'GET':
+        print("get")
+    return render_template('index.html', img_name=img_name)
+
+
 
 if __name__ == '__main__':
     app.debug = True

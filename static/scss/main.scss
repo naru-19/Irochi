@@ -1,0 +1,268 @@
+@import "valiables";
+
+
+body {
+    font-family: $ff;
+    background-color: $col-main;
+    color: $col-sub2;
+}
+a{
+    text-decoration: none;            
+}
+button, input, select, textarea {
+  font-family : $ff;
+  color: black;
+}
+.selecter{
+    height: 25px;
+}
+input,textarea{
+    line-height: 18px;
+    height: 19px;
+    margin: 1px;
+    font-size   : 15px;
+}
+.btn{
+    color: $col-sub2;
+    background-color: rgba(0,0,0,0);
+    border: 5px double $col-sub2;
+    transition: all 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+}
+.btn:hover {
+    border-color:(0,0,0,0);
+    box-shadow: inset 0 0 20px 
+    rgba(255, 255, 255, 0.5), 0 0 20px 
+    rgba(255, 255, 255, 0.2);
+    outline-color: transparent;
+    outline-offset: 12px;
+    text-shadow: 2px 2px 3px #000;
+    cursor: pointer;
+}      
+.formarea{
+    .text_area{
+        color: $col-main;
+        border: 1px solid $col-sub2;
+    }
+}
+.imgarea{
+    border: 1px solid $col-sub2-clear;
+    &__img{
+        text-align: center;
+    }
+    &__title{
+        text-align: center;
+    }
+    &__table{
+        text-align: center;
+        table{
+            .color-code{
+                border: 1px solid $col-sub2-clear;
+            }
+        }
+        form{
+            input{
+                text-align: center;
+            }
+        }
+    }
+}
+.download-btn{
+    padding: 0px 0 100px 0;
+    width: 100%;
+    text-align: center;
+    .btn{
+        margin: 0;
+    }
+}    
+
+.how2use{
+    width: 100%;
+    padding: 30px 0 70px 0 ;
+    &__title{
+        text-align: center;
+    }
+    &__step{
+        margin: 30px 0 0 0;
+        text-align: center;
+    }
+    img{
+        width:500px;
+    }
+    a{
+        color: $col-sub1;
+    }
+}
+
+@media screen and (min-width:768px) {
+    body {
+        border-left: 8px solid $col-sub2-clear;
+        border-right: 8px solid $col-sub2-clear;
+        height:100%;
+        min-height:100%;
+        max-width: 768px;
+        margin: 0 auto 0 auto;
+        padding: 30px 0 0 0 ;
+    }
+    .main{
+        display: flex;
+        margin: 30px ;
+        padding: 0 15px 0 15px;
+    }
+    .btn{
+        width: 150px;
+        margin:15px auto 15px 75px;
+        color: $col-sub2;
+        background-color: rgba(0,0,0,0);
+        border: 5px double $col-sub2;
+        transition: all 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+    }
+    .btn:hover {
+        border-color:(0,0,0,0);
+        box-shadow: inset 0 0 20px 
+        rgba(255, 255, 255, 0.5), 0 0 20px 
+        rgba(255, 255, 255, 0.2);
+        outline-color: transparent;
+        outline-offset: 12px;
+        text-shadow: 2px 2px 3px #000;
+        cursor: pointer;
+    }      
+    .formarea{
+        border: 1px solid $col-sub2-clear;
+        padding: 20px;
+        margin: 0 30px 0 30px;
+        &__title{
+            font-size: $fs1;
+            margin: 10px 0 10px 0;
+        }
+        .text_area{
+            color: $col-main;
+            width: 145px;
+            border: 1px solid $col-sub2;
+        }
+        .btn{
+            margin: 0;
+        }
+    }
+    .area-right{
+        margin-right: 0;
+    }
+    .imgarea{
+        // width: 300px;
+        width: 50%;
+        border: 1px solid $col-sub2-clear;
+        &__img{
+            margin: 15px 50px 15px 50px;
+            text-align: center;
+        }
+        &__title{
+            text-align: center;
+        }
+        &__table{
+            width: 100%;
+            text-align: center;
+            .colorarea{
+                width:90px;
+                height: 20px;
+            }
+            table{
+                padding: 0 50px 0 50px;
+                width: 100%;
+                .color-code{
+                    font-size: 15px;
+                    line-height: 20px;
+                    border: 1px solid $col-sub2-clear;
+                }
+            }
+            form{
+                width: 150px;
+                input{
+                    margin: 10px 0 10px 0;
+                    font-size: $fs1;
+                    text-align: center;
+                    width: 75px;
+                    margin: 0 auto 0 45.5px;
+                }
+            }
+            .edit-table{
+                display: flex;
+                margin: 0 0 0 25px;
+                .colors{
+                    width: 146px;
+                    margin: 0 0 0 25px;
+                    .colorarea{
+                        width: 90px;
+                        margin: 2px;
+                        height: 23px;
+                    }
+                }
+            }
+        }
+    }
+    .download-btn{
+        padding: 0px 0 100px 0;
+        width: 100%;
+        text-align: center;
+        .btn{
+            margin: 0;
+        }
+    }    
+
+}
+
+@media screen and (max-width:767px) {
+    .formarea{
+        width: 90%;
+        margin:100px 5% 20px 5%;
+        font-size: 0.5rem;
+        button,input{
+            font-size: 0.5rem;
+        }
+        div{
+            margin: 10px 0 10px 0;
+        }
+    }
+    .imgarea{
+        &__table{
+            width: 100%;
+        }
+        .space{
+            display: none;
+        }
+        table{
+            width: 100%;
+            // padding-left: 15%;
+
+        }
+    }
+    .how2use{
+        img{
+            width: 100%;
+        }
+    }
+    .edit-table{
+        display: flex;
+        .btn{
+            width: 100%;
+            margin:15px 0 15px 25%;
+            display: block;
+        }
+        form{
+            width: 60%;
+        }
+        .colors{
+            width: 40%;
+        }
+        .colorarea{
+            width: 100%;
+            margin: 2px 0 1px 0;
+            height: 25px;
+        }
+    }
+    .download-btn{
+        margin: 50px 0 0 0 ;
+        text-align: center;
+        .btn{
+            margin: 0;
+        }
+    }    
+}

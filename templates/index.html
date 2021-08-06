@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
+    <link rel="stylesheet" href="../static/css/main.css">
+    <title>Shiny|色違い生成サイト</title>
+</head>
+
+<body>
+<div class="formarea">
+    <form action="/" method="post" enctype="multipart/form-data">
+        <div class="formarea__title">
+            1.<input type="file" class="selecter"  name="image" accept="image/png, image/jpeg">
+        </div>
+        <div class="formarea__title">
+        2.<input type="text" class="text_area" name="name" placeholder="数字を入力">
+        <span>イラストの構成色数を入力してください</span>
+        </div>
+        3.<button type="submit" class="btn btn-success">送信する</button>
+    </form>
+</div>
+{% if img_name %}
+<div>
+    <div class="main">
+        <div class="pc imgarea">
+            <div class="imgarea__title">
+                original画像
+            </div>
+            <div class="imgarea__img">
+                <img src="{{ url_for('static', filename='images/original.jpg') }}"
+                    style="margin-top: 10px; vertical-align: bottom; height: 200px;">
+            </div>
+            <div class="imgarea__table">
+                構成色
+            </div>
+            <div class="imgarea__table">
+                <table>
+                    <thead>
+                        <tr>
+                            {% for i in header_ori: %}
+                            <th scope="col">{{i}}</th>
+                            <th scope="col">color</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in record_ori: %}
+                        <tr>
+                            {% for j in i: %}
+                            <td class="color-code">{{ j }}</td>
+                            <td class="colorarea" style="background-color: {{ j }};"></td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="pc imgarea">
+            <div class="imgarea__title">
+                色違い画像
+            </div>
+            <div class="imgarea__img">
+                {% if isedit %}
+                <img src="{{ url_for('static', filename='images/edit.jpg') }}"
+                    style="margin-top: 10px; vertical-align: bottom; height: 200px;">
+                {% else %}
+                <div class="space pc" style="height: 200px;width: 200px;"></div>
+                {% endif %}
+            </div>
+            <div class="imgarea__table">
+                構成色
+            </div>
+            <div class="imgarea__table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>color code</td>
+                            <th>color</td>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="edit-table">
+                    <form action="/" method="get" enctype="multipart/form-data">
+                        {% for i in range(N): %}
+                        <input id="code-{{i}}" type="text" name="color" value="{{record_edit[i][0]}}" onkeyup="changeHandler({{i}})">
+                        {% endfor %}
+                        <button type="submit" class="btn sub2edit" >色違いにする</button>
+                    </form>
+                    <div class="colors">
+                        {% for i in range(N): %}
+                            <div  style="background-color: {{record_edit[i][0]}};" class="colorarea" id="area-{{i}}"></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="download-btn">
+    <a href="{{ url_for('static', filename='images/edit.jpg') }}" download="shiny.jpg" class="btn">色違いをダウンロードする</a>
+</div>
+{% endif %}
+<div class="how2use">
+    <div class="how2use__title">
+        使い方
+    </div>
+    <div class="how2use__step">
+        step1. 色違い生成の元画像を選択する
+    </div>
+    <div class="how2use__step">
+        step2. 画像の大まかな構成色数を入力し送信(背景の色も数える)
+    </div>
+    <div class="how2use__step">
+        step3. ちょっと待つと次のように表示される
+        <img src="{{ url_for('static', filename='images/how2use.png') }}"
+            style="margin-top: 10px; vertical-align: bottom;">
+    </div>
+    <div class="how2use__step">
+        step4. 右側のcolor codeの部分を好きなように変える<br>
+        hexでの入力をお願いします
+    </div>
+    <div class="how2use__step">
+        step5. 完成したものをダウンロード
+    </div>
+    <div class="how2use__step">
+        お問い合わせは<a href="https://hurocha.herokuapp.com/contact" target="_blank">こちら</a>から
+    </div>
+    
+</div>
+
+</body>
+<script>
+    function changeHandler(i) {
+        var code= document.getElementById("code-"+i);
+        var code_color = document.getElementById("area-" + i);
+        s=code.value;
+        if (s.length==7){
+            code_color.style.backgroundColor=String(s);
+            console.log(code_color.style);
+        }
+
+    }
+</script>
+</html>

@@ -1,0 +1,267 @@
+body {
+  font-family: "Noto Serif JP", serif;
+  background-color: rgba(47, 50, 56, 0.7);
+  color: #dddddd;
+}
+
+a {
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font-family: "Noto Serif JP", serif;
+  color: black;
+}
+
+.selecter {
+  height: 25px;
+}
+
+input, textarea {
+  line-height: 18px;
+  height: 19px;
+  margin: 1px;
+  font-size: 15px;
+}
+
+.btn {
+  color: #dddddd;
+  background-color: rgba(0, 0, 0, 0);
+  border: 5px double #dddddd;
+  transition: all 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.btn:hover {
+  border-color: 0, 0, 0, 0;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: transparent;
+  outline-offset: 12px;
+  text-shadow: 2px 2px 3px #000;
+  cursor: pointer;
+}
+
+.formarea .text_area {
+  color: rgba(47, 50, 56, 0.7);
+  border: 1px solid #dddddd;
+}
+
+.imgarea {
+  border: 1px solid rgba(238, 238, 238, 0.4);
+}
+
+.imgarea__img {
+  text-align: center;
+}
+
+.imgarea__title {
+  text-align: center;
+}
+
+.imgarea__table {
+  text-align: center;
+}
+
+.imgarea__table table .color-code {
+  border: 1px solid rgba(238, 238, 238, 0.4);
+}
+
+.imgarea__table form input {
+  text-align: center;
+}
+
+.download-btn {
+  padding: 0px 0 100px 0;
+  width: 100%;
+  text-align: center;
+}
+
+.download-btn .btn {
+  margin: 0;
+}
+
+.how2use {
+  width: 100%;
+  padding: 30px 0 70px 0;
+}
+
+.how2use__title {
+  text-align: center;
+}
+
+.how2use__step {
+  margin: 30px 0 0 0;
+  text-align: center;
+}
+
+.how2use img {
+  width: 500px;
+}
+
+.how2use a {
+  color: #00ACC1;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    border-left: 8px solid rgba(238, 238, 238, 0.4);
+    border-right: 8px solid rgba(238, 238, 238, 0.4);
+    height: 100%;
+    min-height: 100%;
+    max-width: 768px;
+    margin: 0 auto 0 auto;
+    padding: 30px 0 0 0;
+  }
+  .main {
+    display: flex;
+    margin: 30px;
+    padding: 0 15px 0 15px;
+  }
+  .btn {
+    width: 150px;
+    margin: 15px auto 15px 75px;
+    color: #dddddd;
+    background-color: rgba(0, 0, 0, 0);
+    border: 5px double #dddddd;
+    transition: all 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+  }
+  .btn:hover {
+    border-color: 0, 0, 0, 0;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+    outline-color: transparent;
+    outline-offset: 12px;
+    text-shadow: 2px 2px 3px #000;
+    cursor: pointer;
+  }
+  .formarea {
+    border: 1px solid rgba(238, 238, 238, 0.4);
+    padding: 20px;
+    margin: 0 30px 0 30px;
+  }
+  .formarea__title {
+    font-size: 15px;
+    margin: 10px 0 10px 0;
+  }
+  .formarea .text_area {
+    color: rgba(47, 50, 56, 0.7);
+    width: 145px;
+    border: 1px solid #dddddd;
+  }
+  .formarea .btn {
+    margin: 0;
+  }
+  .area-right {
+    margin-right: 0;
+  }
+  .imgarea {
+    width: 50%;
+    border: 1px solid rgba(238, 238, 238, 0.4);
+  }
+  .imgarea__img {
+    margin: 15px 50px 15px 50px;
+    text-align: center;
+  }
+  .imgarea__title {
+    text-align: center;
+  }
+  .imgarea__table {
+    width: 100%;
+    text-align: center;
+  }
+  .imgarea__table .colorarea {
+    width: 90px;
+    height: 20px;
+  }
+  .imgarea__table table {
+    padding: 0 50px 0 50px;
+    width: 100%;
+  }
+  .imgarea__table table .color-code {
+    font-size: 15px;
+    line-height: 20px;
+    border: 1px solid rgba(238, 238, 238, 0.4);
+  }
+  .imgarea__table form {
+    width: 150px;
+  }
+  .imgarea__table form input {
+    margin: 10px 0 10px 0;
+    font-size: 15px;
+    text-align: center;
+    width: 75px;
+    margin: 0 auto 0 45.5px;
+  }
+  .imgarea__table .edit-table {
+    display: flex;
+    margin: 0 0 0 25px;
+  }
+  .imgarea__table .edit-table .colors {
+    width: 146px;
+    margin: 0 0 0 25px;
+  }
+  .imgarea__table .edit-table .colors .colorarea {
+    width: 90px;
+    margin: 2px;
+    height: 23px;
+  }
+  .download-btn {
+    padding: 0px 0 100px 0;
+    width: 100%;
+    text-align: center;
+  }
+  .download-btn .btn {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .formarea {
+    width: 90%;
+    margin: 100px 5% 20px 5%;
+    font-size: 0.5rem;
+  }
+  .formarea button, .formarea input {
+    font-size: 0.5rem;
+  }
+  .formarea div {
+    margin: 10px 0 10px 0;
+  }
+  .imgarea__table {
+    width: 100%;
+  }
+  .imgarea .space {
+    display: none;
+  }
+  .imgarea table {
+    width: 100%;
+  }
+  .how2use img {
+    width: 100%;
+  }
+  .edit-table {
+    display: flex;
+  }
+  .edit-table .btn {
+    width: 100%;
+    margin: 15px 0 15px 25%;
+    display: block;
+  }
+  .edit-table form {
+    width: 60%;
+  }
+  .edit-table .colors {
+    width: 40%;
+  }
+  .edit-table .colorarea {
+    width: 100%;
+    margin: 2px 0 1px 0;
+    height: 25px;
+  }
+  .download-btn {
+    margin: 50px 0 0 0;
+    text-align: center;
+  }
+  .download-btn .btn {
+    margin: 0;
+  }
+}
+/*# sourceMappingURL=main.css.map */
