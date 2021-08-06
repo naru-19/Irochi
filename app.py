@@ -138,11 +138,12 @@ def index():
             return render_template('index.html', img_name=img_name)
         else:
             N_cols=int(N_cols)
-            
+            if N_cols<0:
+                return render_template('index.html', img_name=img_name)
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
             ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER']+ "original.jpg"))
-            ori_ar=np.asarray(ori)
+            ori_ar=np.asarray(ori)[:,:,:3]
             print(ori_ar.shape)
             img_name="ok"
             img_df,x,y,z=img2df(ori_ar)
@@ -159,8 +160,6 @@ def index():
             data_df=pd.DataFrame(data_img)
             data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"data.csv"),index=False)
             hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"original.csv"),index=False)
-
-
     if request.method == 'GET':
         s=str(request.args.getlist('color'))
         if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER2'] +"data.csv")):
@@ -203,4 +202,4 @@ def index():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0",port=5000)
