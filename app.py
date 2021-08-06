@@ -9,7 +9,9 @@ from sklearn.cluster import KMeans
 app = Flask(__name__, static_url_path="")
 
 UPLOAD_FOLDER = './static/images/'
+UPLOAD_FOLDER2 = './static/csv/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER2'] = UPLOAD_FOLDER2
 app.config.from_object(__name__)
 
 cols=["r","g","b"]
@@ -139,7 +141,7 @@ def index():
             
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
-            ori=Image.open(os.path.join(IMG_PATH + "original.jpg"))
+            ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER']+ "original.jpg"))
             ori_ar=np.asarray(ori)
             print(ori_ar.shape)
             img_name="ok"
@@ -147,7 +149,7 @@ def index():
             data_img.append(N_cols),data_img.append(x),data_img.append(y),data_img.append(z)
             img_df=color_grouping(img_df,N_cols)
             col_df=coltable(img_df,N_cols)
-            img_df.to_csv(os.path.join(CSV_PATH +"img.csv"),index=False)
+            img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2']+"img.csv"),index=False)
             hex_ori_df=rgbdf2hexdf(col_df).rename(columns={0:"color code"})
             ori_data[0]= hex_ori_df.columns 
             ori_data[1] = hex_ori_df.values.tolist() 
@@ -155,8 +157,8 @@ def index():
             edit_data[1]=ori_data[1]
             img_name = "ok"
             data_df=pd.DataFrame(data_img)
-            data_df.to_csv(os.path.join(CSV_PATH +"data.csv"),index=False)
-            hex_ori_df.to_csv(os.path.join(CSV_PATH +"original.csv"),index=False)
+            data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"data.csv"),index=False)
+            hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"original.csv"),index=False)
 
 
     if request.method == 'GET':
