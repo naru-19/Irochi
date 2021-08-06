@@ -11,7 +11,7 @@ import io
 app = Flask(__name__, static_url_path="")
 
 UPLOAD_FOLDER = './static/images/'
-UPLOAD_FOLDER2 = './static/csv/'
+UPLOAD_FOLDER2 ='./static/csv/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_FOLDER2'] = UPLOAD_FOLDER2
 app.config.from_object(__name__)
@@ -155,7 +155,7 @@ def index():
             img_df=color_grouping(img_df,N_cols)
             col_df=coltable(img_df,N_cols)
 
-
+            decopri(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"))
             img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER2'],"img.csv"),index=False)
             # img_df.to_csv(buffer,index=False)
 
