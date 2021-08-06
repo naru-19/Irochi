@@ -138,8 +138,8 @@ def index():
             return render_template('index.html', img_name=img_name)
         else:
             N_cols=int(N_cols)
-            if N_cols<0:
-                return render_template('index.html', img_name=img_name)
+            # if N_cols<0:
+            #     return render_template('index.html', img_name=img_name)
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
             ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER']+ "original.jpg"))
