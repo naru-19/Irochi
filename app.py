@@ -30,11 +30,12 @@ def index():
     if request.method == 'POST':
         img_file = request.files['image']
         N_cols = request.form['name']
-        if img_file=="" or N_cols=="":
-            pass
+        filename = secure_filename(img_file.filename)
+        if len(filename)==0 or N_cols=="":
+            return render_template('index.html', img_name=img_name)
         else:
             N_cols=int(N_cols)
-            filename = secure_filename(img_file.filename)
+            
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
             ori=Image.open(os.path.join(IMG_PATH + "original.jpg"))
