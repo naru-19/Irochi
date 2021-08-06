@@ -162,7 +162,38 @@ def index():
 
 
     if request.method == 'GET':
-        print("get")
+        s=str(request.args.getlist('color'))
+        if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER2'] +"data.csv")):
+            img_name = "ok"
+            s=s[1:-1]
+            s=s.split(', ')
+            for i in range(len(s)):
+                s[i]=s[i][1:-1]
+            col_li=s
+            data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2']+"data.csv"))
+            hex_edit_df=pd.DataFrame(col_li).rename(columns={0:"color"})
+            hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2'] +"original.csv"))
+            img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER2']+"img.csv"))
+            edit_df=img_df.copy()
+            for i in range(len(col_li)):
+                r,g,b=hex2rgb(col_li[i])
+                edit_df.loc[edit_df["group"]==i,"r"]=r
+                edit_df.loc[edit_df["group"]==i,"g"]=g
+                edit_df.loc[edit_df["group"]==i,"b"]=b
+            edit_df=edit_df.drop("group",axis=1)
+            ori_data[0] = hex_ori_df.columns 
+            ori_data[1] = hex_ori_df.values.tolist()
+            edit_data[0] = hex_edit_df.columns 
+            edit_data[1] = hex_edit_df.values.tolist()
+            N_cols=int(data_df.loc[0])
+            x=int(data_df.loc[1])
+            y=int(data_df.loc[2])
+            edit_img=np.array(edit_df)
+            edit_ar=edit_img.reshape([x,y,3])
+            print(edit_ar.shape)
+            edit_img = Image.fromarray(np.uint8(edit_ar))
+            isedit=True
+            edit_img.save(os.path.join(app.config['UPLOAD_FOLDER']+"edit.jpg"))
     return render_template('index.html', img_name=img_name,
         isedit=isedit, header_ori=ori_data[0], record_ori=ori_data[1],
         N=N_cols,header_edit=edit_data[0], record_edit=edit_data[1]
