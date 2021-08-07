@@ -9,7 +9,6 @@ from sklearn.cluster import KMeans
 from sklearn.cluster import MiniBatchKMeans
 import io
 import time
-
 app = Flask(__name__, static_url_path="")
 
 UPLOAD_FOLDER = './static/images/'
@@ -149,9 +148,9 @@ def index():
             img_file.save(img_url)
             ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER'],"original.jpg"))
             if ori.width>ori.height:
-                ori=ori.resize((200,int(ori.height*200/ori.width)))    
+                ori=ori.resize((250,int(ori.height*250/ori.width)))    
             else:
-                ori=ori.resize((int(ori.width*200/ori.height),200))
+                ori=ori.resize((int(ori.width*250/ori.height),250))
             decopri("step1 画像を保存終了:"+str(time.time() - start))
             ori_ar=np.asarray(ori)[:,:,:3]
             img_name="ok"
@@ -237,4 +236,4 @@ def editer():
     )
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0')

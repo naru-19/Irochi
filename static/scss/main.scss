@@ -13,9 +13,7 @@ button, input, select, textarea {
   font-family : $ff;
   color: black;
 }
-.selecter{
-    height: 25px;
-}
+
 input,textarea{
     line-height: 18px;
     height: 19px;
@@ -108,6 +106,9 @@ input[type="text"]:focus {
 }
 
 @media screen and (min-width:768px) {
+    .selecter{
+        height: 25px;
+    }
     body {
         border-left: 8px solid $col-sub2-clear;
         border-right: 8px solid $col-sub2-clear;
@@ -220,20 +221,57 @@ input[type="text"]:focus {
             margin: 0;
         }
     }    
+    .sp-only{
+        display: none;
+    }
 
 }
 
 @media screen and (max-width:767px) {
+    div{
+        margin: 10px 0 10px 0;
+    }
+
+    button,input{
+        font-size: 0.5rem;
+    }
     .formarea{
         width: 90%;
-        margin:100px 5% 20px 5%;
+        margin:100px 5% 50px 5%;
         font-size: 0.5rem;
-        button,input{
-            font-size: 0.5rem;
+        &__title{
+            text-align: center;
+            margin: 50px 0 50px 0;
+            input[type="file"]{
+                height: 30px;
+                position: absolute;
+                opacity: 0;
+            }
+            input[type="tel"]{
+                height: 30px;
+                width:50%;
+                font-size: 17px;
+                padding: 0 10px 0 10px;
+            }
+            button{
+                height: 40px;
+                width: 50%;
+            }
+        } 
+        .sp-block{
+            display: block;
+            font-size: 15px;
         }
-        div{
-            margin: 10px 0 10px 0;
+        &__upload{
+            color: $col-main;
+            background-color: $col-sub2;
+            font-size: 20px ;
+            padding: 0 10px 0 10px;
+            height: 40px;
+            border-radius: 5px;
+            border: 2px solid $col-sub1;
         }
+        
     }
     .imgarea{
         &__table{
@@ -245,7 +283,6 @@ input[type="text"]:focus {
         table{
             width: 100%;
             // padding-left: 15%;
-
         }
     }
     .how2use{
@@ -253,23 +290,37 @@ input[type="text"]:focus {
             width: 100%;
         }
     }
+    .sp-none{
+        display:none;
+    }
     .edit-table{
-        display: flex;
+        width: 100%;
+        &__title{
+            margin: -5px 0 0 0 ;
+            width: 100%;
+            text-align: center;
+        }
+        &__form{
+            .input-wrap{
+                width: 70%;
+                margin: 5px 15% 5px 15%;
+                // margin: 0px 15% 0px 15%;
+                // height: 35px;
+            }
+            input[type="text"]{
+                height: 30px;
+                border: none;
+                width: 7ch;
+                font-size: 17px;
+                margin: 0;
+                border-radius: 0%;
+            }
+            textarea{
+                margin: 0;
+            }
+        }
         .btn{
-            width: 100%;
-            margin:15px 0 15px 25%;
-            display: block;
-        }
-        form{
-            width: 60%;
-        }
-        .colors{
-            width: 40%;
-        }
-        .colorarea{
-            width: 100%;
-            margin: 2px 0 1px 0;
-            height: 25px;
+            display: inline-block;
         }
     }
     .download-btn{

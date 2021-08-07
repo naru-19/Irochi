@@ -15,13 +15,15 @@
 <div class="formarea">
     <form action="/" method="post" enctype="multipart/form-data">
         <div class="formarea__title">
-            1.<input type="file" class="selecter"  name="image" accept="image/png, image/jpeg">
+            <input type="file" required class="selecter"name="image" accept="image/png, image/jpeg"><span class="formarea__upload">画像を選択して下さい</span>
         </div>
         <div class="formarea__title">
-        2.<input type="text" class="text_area" name="name" placeholder="数字を入力">
-        <span>イラストの構成色数を入力してください</span>
+        <input type="tel" required class="text_area" name="name" placeholder="数字を入力">
+        <span class="sp-block">イラストの構成色数を入力してください</span>
         </div>
-        3.<button type="submit" class="btn btn-success">送信する</button>
+        <div class="formarea__title">
+            <button type="submit" class="btn btn-success">送信する</button>
+        </div>
     </form>
 </div>
 
@@ -96,7 +98,7 @@
                 構成色
             </div>
             <div class="imgarea__table">
-                <table>
+                <table class="sp-none">
                     <thead>
                         <tr>
                             <th>color code</td>
@@ -104,7 +106,7 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="edit-table">
+                <div class="edit-table sp-none">
                     <form action="/editer" method="get" enctype="multipart/form-data">
                         {% for i in range(N): %}
                         <input id="code-{{i}}" maxlength="7" required type="text" name="color" value="{{record_edit[i][0]}}" onkeyup="changeHandler({{i}})">
@@ -115,6 +117,25 @@
                         {% for i in range(N): %}
                             <div  style="background-color: {{record_edit[i][0]}};" class="colorarea" id="area-{{i}}"></div>
                         {% endfor %}
+                    </div>
+                </div>
+                <div class="sp-only">
+                    <div class=" edit-table ">
+                        <div class="edit-table__title">
+                            color code
+                        </div>
+                        <div class="edit-table__form">
+                            <form action="/editer" method="get" enctype="multipart/form-data">
+                                {% for i in range(N): %}
+                                <div class="input-wrap" id="areasp-{{i}}" style="background-color: {{record_edit[i][0]}};">
+                                    <input id="codesp-{{i}}"  maxlength="7" required type="text" name="color" value="{{record_edit[i][0]}}"
+                                        onkeyup="changeHandler({{i}})">
+                                </div>
+                                {% endfor %}
+                                <div></div>
+                                <button type="submit" id="editbtn" class="btn sub2edit">色違いにする</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,10 +180,14 @@
 <script>
     function changeHandler(i) {
         var code= document.getElementById("code-"+i);
+        var codesp = document.getElementById("codesp-" + i);
         var code_color = document.getElementById("area-" + i);
+        var code_colorsp = document.getElementById("areasp-" + i);
+        console.log(codesp)
         var edit_btn= document.getElementById("editbtn");
         var chk=["0","1","2","3","4","5","6","7","8","9","0","a","b","c", "d", "e", "f"]
         s=code.value;
+        s2 = codesp.value;
         if (s.length==7){
             code_color.style.backgroundColor=String(s);
             code.style.border = "1px solid rgba(0,0,0,0)";
@@ -171,6 +196,15 @@
         else{
             code.style.border = "2px solid red";
             edit_btn.disabled=true;
+        }
+        if (s2.length == 7) {
+            code_colorsp.style.backgroundColor = String(s2);
+            codesp.style.border = "1px solid rgba(0,0,0,0)";
+            edit_btn.disabled = false;
+        }
+        else {
+            codesp.style.border = "2px solid red";
+            edit_btn.disabled = true;
         }
 
     }

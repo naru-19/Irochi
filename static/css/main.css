@@ -13,10 +13,6 @@ button, input, select, textarea {
   color: black;
 }
 
-.selecter {
-  height: 25px;
-}
-
 input, textarea {
   line-height: 18px;
   height: 19px;
@@ -117,6 +113,9 @@ input[type="text"]:focus {
 }
 
 @media screen and (min-width: 768px) {
+  .selecter {
+    height: 25px;
+  }
   body {
     border-left: 8px solid rgba(238, 238, 238, 0.4);
     border-right: 8px solid rgba(238, 238, 238, 0.4);
@@ -226,19 +225,54 @@ input[type="text"]:focus {
   .download-btn .btn {
     margin: 0;
   }
+  .sp-only {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 767px) {
+  div {
+    margin: 10px 0 10px 0;
+  }
+  button, input {
+    font-size: 0.5rem;
+  }
   .formarea {
     width: 90%;
-    margin: 100px 5% 20px 5%;
+    margin: 100px 5% 50px 5%;
     font-size: 0.5rem;
   }
-  .formarea button, .formarea input {
-    font-size: 0.5rem;
+  .formarea__title {
+    text-align: center;
+    margin: 50px 0 50px 0;
   }
-  .formarea div {
-    margin: 10px 0 10px 0;
+  .formarea__title input[type="file"] {
+    height: 30px;
+    position: absolute;
+    opacity: 0;
+  }
+  .formarea__title input[type="tel"] {
+    height: 30px;
+    width: 50%;
+    font-size: 17px;
+    padding: 0 10px 0 10px;
+  }
+  .formarea__title button {
+    height: 40px;
+    width: 50%;
+  }
+  .formarea .sp-block {
+    display: block;
+    font-size: 15px;
+  }
+  .formarea__upload {
+    color: rgba(47, 50, 56, 0.7);
+    background-color: #dddddd;
+    font-size: 20px;
+    padding: 0 10px 0 10px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid #00ACC1;
   }
   .imgarea__table {
     width: 100%;
@@ -252,24 +286,34 @@ input[type="text"]:focus {
   .how2use img {
     width: 100%;
   }
+  .sp-none {
+    display: none;
+  }
   .edit-table {
-    display: flex;
+    width: 100%;
+  }
+  .edit-table__title {
+    margin: -5px 0 0 0;
+    width: 100%;
+    text-align: center;
+  }
+  .edit-table__form .input-wrap {
+    width: 70%;
+    margin: 5px 15% 5px 15%;
+  }
+  .edit-table__form input[type="text"] {
+    height: 30px;
+    border: none;
+    width: 7ch;
+    font-size: 17px;
+    margin: 0;
+    border-radius: 0%;
+  }
+  .edit-table__form textarea {
+    margin: 0;
   }
   .edit-table .btn {
-    width: 100%;
-    margin: 15px 0 15px 25%;
-    display: block;
-  }
-  .edit-table form {
-    width: 60%;
-  }
-  .edit-table .colors {
-    width: 40%;
-  }
-  .edit-table .colorarea {
-    width: 100%;
-    margin: 2px 0 1px 0;
-    height: 25px;
+    display: inline-block;
   }
   .download-btn {
     margin: 50px 0 0 0;
