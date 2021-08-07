@@ -120,7 +120,7 @@ def rgbvalue(li, df):
     return rgbv
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST','GET'])
 def index():
     img_name = ""
     error_flag=""
@@ -140,7 +140,6 @@ def index():
             return render_template('index.html', img_name=img_name,error_case=error_flag)
         else:
             decopri("処理スタート")
-
             N_cols=int(N_cols)
             if N_cols<0:
                 error_flag="True"
@@ -152,7 +151,6 @@ def index():
                 ori=ori.resize((200,int(ori.height*200/ori.width)))    
             else:
                 ori=ori.resize((int(ori.width*200/ori.height),200))
-
             decopri("step1 画像を保存終了:"+str(time.time() - start))
             ori_ar=np.asarray(ori)[:,:,:3]
             img_name="ok"
