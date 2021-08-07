@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 import io
+import time
 
 app = Flask(__name__, static_url_path="")
 
@@ -68,14 +69,14 @@ def img2df(input_img):
     im_ar = input_img
     x, y, z = im_ar.shape[0], im_ar.shape[1], im_ar.shape[2]
     df = (pd.DataFrame(im_ar.reshape([x * y, z]))).rename(columns={0: "r", 1: "g", 2: "b"})
-    decopri("img２df completed successfully")
+    # decopri("img２df completed successfully")
     return df, x, y, z
 
 
 def color_grouping(df, N):
     pred = KMeans(n_clusters=N).fit_predict(np.array(df))
     df["group"] = pred
-    decopri("color_grouping completed successfully")
+    # decopri("color_grouping completed successfully")
     return df
 
 
@@ -92,7 +93,7 @@ def coltable(df, N):
                 rgb.append(int(df[df["group"] == i][cols[j]].mean()))
         #         col_df.append(rgb2hex(rgb))
         col_df.append(rgb)
-    decopri("coltable completed successfully")
+    # decopri("coltable completed successfully")
     col_df = pd.DataFrame(col_df)
     return col_df
 
@@ -101,7 +102,7 @@ def rgbdf2hexdf(rgb_df):
     hexli = []
     for i in range(len(rgb_df)):
         hexli.append(rgb2hex(rgb_df.loc[i]))
-    decopri("rgb2hex completed successfully")
+    # decopri("rgb2hex completed successfully")
     return pd.DataFrame(hexli)
 
 
@@ -130,6 +131,7 @@ def index():
     cols=["r","g","b"]
     data_img=[]
     if request.method == 'POST':
+        start = time.time()
         img_file = request.files['image']
         N_cols = request.form['name']
         filename = secure_filename(img_file.filename)
@@ -137,6 +139,8 @@ def index():
             error_flag="True"
             return render_template('index.html', img_name=img_name,error_case=error_flag)
         else:
+            decopri("処理スタート")
+
             N_cols=int(N_cols)
             if N_cols<0:
                 error_flag="True"
@@ -144,14 +148,22 @@ def index():
             img_url = os.path.join(app.config['UPLOAD_FOLDER'], "original.jpg")
             img_file.save(img_url)
             ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER'],"original.jpg"))
+            if ori.width>ori.height:
+                ori=ori.resize((200,int(ori.height*200/ori.width)))    
+            else:
+                ori=ori.resize((int(ori.width*200/ori.height),100))
+
+            decopri("step1 画像を保存終了:"+str(time.time() - start))
             ori_ar=np.asarray(ori)[:,:,:3]
             img_name="ok"
             img_df,x,y,z=img2df(ori_ar)
             data_img.append(N_cols),data_img.append(x),data_img.append(y),data_img.append(z)
             img_df=color_grouping(img_df,N_cols)
+
+            decopri("step2 グループ分け終了:"+str(time.time() - start))
             col_df=coltable(img_df,N_cols)
-            decopri(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
             img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"),index=False)
+            decopri("step3 画像書き込み終了:"+str(time.time() - start))
             hex_ori_df=rgbdf2hexdf(col_df).rename(columns={0:"color code"})
             ori_data[0]= hex_ori_df.columns 
             ori_data[1] = hex_ori_df.values.tolist() 
@@ -161,20 +173,29 @@ def index():
             data_df=pd.DataFrame(data_img)
             data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"data.csv"),index=False)
             hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"),index=False)
+            decopri("step4 post終了:"+str(time.time() - start))
     if request.method == 'GET':
         if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'] ,"data.csv")):
-            s=str(request.args.getlist('color'))
             img_name = "ok"
+
+            start = time.time()
+
+            s=str(request.args.getlist('color'))
             s=s[1:-1]
             s=s.split(', ')
+
+            decopri("step1:"+str(time.time() - start))
+
             for i in range(len(s)):
                 s[i]=s[i][1:-1]
             col_li=s
             data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"data.csv"))
             hex_edit_df=pd.DataFrame(col_li).rename(columns={0:"color"})
             hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"))
-            img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
-            edit_df=img_df.copy()
+            edit_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
+
+            decopri("step2:"+str(time.time() - start))
+
             for i in range(len(col_li)):
                 r,g,b=hex2rgb(col_li[i])
                 edit_df.loc[edit_df["group"]==i,"r"]=r
