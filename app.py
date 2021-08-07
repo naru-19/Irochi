@@ -63,10 +63,7 @@ def hex2rgb(h):
         if flag==0:
             c[int(i/2)]+=int(h[i])*(16**((i+1)%2))
     return c[0],c[1],c[2]
-
-
-
-   
+  
 def img2df(input_img):
     im_ar = input_img
     x, y, z = im_ar.shape[0], im_ar.shape[1], im_ar.shape[2]
@@ -120,10 +117,7 @@ def rgbvalue(li, df):
         rgbvalue += "  " * 3 + df.loc[i]
         rgbv.append(rgbvalue)
     return rgbv
-# buffer2 = io.StringIO()
-# buffer3 = io.StringIO()
 
-# buffer = io.StringIO()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -151,18 +145,13 @@ def index():
             img_file.save(img_url)
             ori=Image.open(os.path.join(app.config['UPLOAD_FOLDER'],"original.jpg"))
             ori_ar=np.asarray(ori)[:,:,:3]
-            print(ori_ar.shape)
             img_name="ok"
             img_df,x,y,z=img2df(ori_ar)
             data_img.append(N_cols),data_img.append(x),data_img.append(y),data_img.append(z)
             img_df=color_grouping(img_df,N_cols)
             col_df=coltable(img_df,N_cols)
-
             decopri(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
             img_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"),index=False)
-            # img_df.to_csv(buffer,index=False)
-
-
             hex_ori_df=rgbdf2hexdf(col_df).rename(columns={0:"color code"})
             ori_data[0]= hex_ori_df.columns 
             ori_data[1] = hex_ori_df.values.tolist() 
@@ -170,17 +159,11 @@ def index():
             edit_data[1]=ori_data[1]
             img_name = "ok"
             data_df=pd.DataFrame(data_img)
-
-            
-
-            # data_df.to_csv(buffer2,index=False)
-            # hex_ori_df.to_csv(buffer3,index=False)
             data_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"data.csv"),index=False)
             hex_ori_df.to_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"),index=False)
     if request.method == 'GET':
-        s=str(request.args.getlist('color'))
         if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'] ,"data.csv")):
-            # if os.path.isfile(buffer2):
+            s=str(request.args.getlist('color'))
             img_name = "ok"
             s=s[1:-1]
             s=s.split(', ')
@@ -188,16 +171,9 @@ def index():
                 s[i]=s[i][1:-1]
             col_li=s
             data_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"data.csv"))
-            # data_df=buffer2.getvalue()
-
             hex_edit_df=pd.DataFrame(col_li).rename(columns={0:"color"})
-
             hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"))
-            # hex_ori_df=buffer3.getvalue()
-
             img_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
-            # img_df=buffer.getvalue()
-
             edit_df=img_df.copy()
             for i in range(len(col_li)):
                 r,g,b=hex2rgb(col_li[i])
