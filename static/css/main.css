@@ -228,7 +228,22 @@ input[type="text"]:focus {
   .sp-only {
     display: none;
   }
-  .rgb2hex__inputarea span {
+  .rgb2hex {
+    display: flex;
+    margin: 40px 0 0 0;
+  }
+  .rgb__inputarea {
+    height: 30px;
+    width: 300px;
+    text-align: right;
+  }
+  .rgb__inputarea input {
+    width: 70px;
+  }
+  .hex__inputarea {
+    margin: 30px 0 30px 50px;
+  }
+  .hex__inputarea .hexout {
     width: 100px;
   }
 }
