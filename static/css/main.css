@@ -246,6 +246,9 @@ input[type="text"]:focus {
   .hex__inputarea .hexout {
     width: 100px;
   }
+  .rgb2hex-title {
+    text-align: center;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -339,6 +342,23 @@ input[type="text"]:focus {
   }
   .download-btn .btn {
     margin: 0;
+  }
+  .rgb__inputarea {
+    height: 30px;
+    width: 70%;
+    text-align: right;
+  }
+  .rgb__inputarea input {
+    width: 70px;
+  }
+  .hex__inputarea {
+    margin: 30px 0 30px 50px;
+  }
+  .hex__inputarea .hexout {
+    width: 100px;
+  }
+  .rgb2hex-title {
+    text-align: center;
   }
 }
 /*# sourceMappingURL=main.css.map */

@@ -246,6 +246,9 @@ input[type="text"]:focus {
             }
         }
     }
+    .rgb2hex-title{
+        text-align: center;
+    }
 }
 
 @media screen and (max-width:767px) {
@@ -351,4 +354,25 @@ input[type="text"]:focus {
             margin: 0;
         }
     }    
+    .rgb{
+        &__inputarea{
+            height: 30px;
+            width:70%;
+            text-align: right;
+            input{
+                width: 70px;
+            }
+        }
+    }
+    .hex{
+        &__inputarea{
+            margin: 30px 0 30px 50px;
+            .hexout{
+                width: 100px;
+            }
+        }
+    }
+    .rgb2hex-title{
+        text-align: center;
+    }
 }
