@@ -228,6 +228,9 @@ input[type="text"]:focus {
   .sp-only {
     display: none;
   }
+  .rgb2hex__inputarea span {
+    width: 100px;
+  }
 }
 
 @media screen and (max-width: 767px) {
