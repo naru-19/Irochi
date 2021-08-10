@@ -209,7 +209,6 @@ def editer():
             hex_ori_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'] ,"original.csv"))
             edit_df=pd.read_csv(os.path.join(app.config['UPLOAD_FOLDER'],"img.csv"))
 
-            decopri("step2:"+str(time.time() - start))
 
             for i in range(len(col_li)):
                 r,g,b=hex2rgb(col_li[i])
@@ -230,6 +229,8 @@ def editer():
             edit_img = Image.fromarray(np.uint8(edit_ar))
             isedit=True
             edit_img.save(os.path.join(app.config['UPLOAD_FOLDER'],"edit.jpg"))
+            decopri("step2:"+str(time.time() - start))
+
     return render_template('index.html', img_name=img_name,
         isedit=isedit, header_ori=ori_data[0], record_ori=ori_data[1],
         N=N_cols,header_edit=edit_data[0], record_edit=edit_data[1],error_case=error_flag
