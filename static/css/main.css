@@ -319,8 +319,15 @@ input[type="text"]:focus {
     text-align: center;
   }
   .edit-table__form .input-wrap {
+    text-align: right;
+    height: 100%;
     width: 70%;
     margin: 5px 15% 5px 15%;
+  }
+  .edit-table__form .input-wrap .reset {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    width: 15%;
   }
   .edit-table__form input[type="text"] {
     height: 30px;
@@ -352,10 +359,18 @@ input[type="text"]:focus {
     width: 70px;
   }
   .hex__inputarea {
-    margin: 30px 0 30px 50px;
+    text-align: center;
+    width: 70%;
+    margin: 30px 15% 30px 50px;
   }
   .hex__inputarea .hexout {
     width: 100px;
+  }
+  .hex__inputarea button {
+    height: 27px;
+    border-radius: 0;
+    background-color: rgba(47, 50, 56, 0.7);
+    color: #dddddd;
   }
   .rgb2hex-title {
     text-align: center;

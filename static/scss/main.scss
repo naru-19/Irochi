@@ -326,10 +326,16 @@ input[type="text"]:focus {
         }
         &__form{
             .input-wrap{
+                text-align: right;
+                // display: inline;
+                height: 100%;
                 width: 70%;
                 margin: 5px 15% 5px 15%;
-                // margin: 0px 15% 0px 15%;
-                // height: 35px;
+                .reset{
+                    border: none;
+                    background-color:rgba(0,0,0,0);
+                    width: 15%;
+                }
             }
             input[type="text"]{
                 height: 30px;
@@ -366,9 +372,17 @@ input[type="text"]:focus {
     }
     .hex{
         &__inputarea{
-            margin: 30px 0 30px 50px;
+            text-align: center;
+            width:70%;
+            margin: 30px 15% 30px 50px;
             .hexout{
                 width: 100px;
+            }
+            button{
+                height: 27px;
+                border-radius: 0;
+                background-color: $col-main;
+                color: $col-sub2;
             }
         }
     }

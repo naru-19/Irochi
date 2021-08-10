@@ -131,7 +131,9 @@
                                 <div class="input-wrap" id="areasp-{{i}}" style="background-color: {{record_edit[i][0]}};">
                                     <input id="codesp-{{i}}"  maxlength="7" required type="text" name="color" value="{{record_edit[i][0]}}"
                                         onkeyup="changeHandler({{i}})">
+                                        <input onclick="resetinput({{i}})"class='reset' type="button" id='delete-{{i}}'value='reset'>
                                 </div>
+                                    
                                 {% endfor %}
                                 <div></div>
                                 <button type="submit" id="editbtn" class="btn sub2edit">色違いにする</button>
@@ -258,6 +260,11 @@
         hex+=li[Math.floor(b/16)];
         hex+=li[b%16];
         copyTarget.value=hex;
+        document.getSelection().empty(copyTarget);
+    }
+    function resetinput(i) {
+        var target = document.getElementById("codesp-"+i);
+        target.value='';
     }
 </script>
 </html>
