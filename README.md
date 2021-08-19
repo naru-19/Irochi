@@ -32,5 +32,6 @@
 
 ## 3.使用例
 
-![スクリーンショット 2021-08-18 19.05.26](/Users/naru-naru/SS/スクリーンショット 2021-08-18 19.05.26.png)
+
+![ss](https://user-images.githubusercontent.com/61283753/129997875-6a3ef2d3-8e5a-4999-be10-53ae582ea74f.JPG)
 
